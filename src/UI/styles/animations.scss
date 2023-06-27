@@ -1,0 +1,14 @@
+@keyframes bump{
+  from {
+    transform: translateY(0);
+  }
+  33% {
+    transform: translateY(4px);
+  }
+  66% {
+    transform: translateY(-3px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

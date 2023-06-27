@@ -1,7 +1,8 @@
 @import "./UI/styles/fonts";
 @import "./UI/styles/variables";
+@import "./UI/styles/animations";
 
-.btn-ryt{
+.btn-ryt {
   align-items: center;
   text-align: center;
   box-sizing: border-box;
@@ -15,16 +16,49 @@
   font-size: 16px;
   line-height: 18px;
   border-radius: 4px;
-  &--white{
+
+  &--white {
     background-color: color($colors, white);
     border: solid 5px color($colors, white);
     color: color($colors, primary);
     transition: all 0.1s;
-    &:hover{
+
+    &:hover {
       background-color: color($colors, primary);
       color: color($colors, white);
     }
   }
+}
+
+.input-ryt {
+  outline: none;
+  border: 1px solid color($colors, light-gray);
+  border-radius: 6px;
+  padding: 5px 2px;
+  width: 100%;
+
+  &--error {
+    border-color: color($colors, red);
+    background-color: color($colors, coral);
+    animation: bump 0.3s normal forwards ease-in-out;
+
+  }
+}
+
+.label-ryt {
+  color: color($colors, gray);
+  font-size: 16px;
+  &--error {
+    color: color($colors, red);
+    animation: bump 0.3s normal forwards ease-in-out;
+  }
+}
+
+.error-ryt {
+  color: color($colors, red);
+  font-size: 11px;
+  margin-bottom: 0;
+  animation: bump 0.3s normal forwards ease-in-out;
 }
 
 
