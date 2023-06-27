@@ -1,2 +1,31 @@
 @import "./UI/styles/fonts";
 @import "./UI/styles/variables";
+
+.btn-ryt{
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  margin: 0;
+  min-height: 40px;
+  padding: 9px 23px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 18px;
+  border-radius: 4px;
+  &--white{
+    background-color: color($colors, white);
+    border: solid 5px color($colors, white);
+    color: color($colors, primary);
+    transition: all 0.1s;
+    &:hover{
+      background-color: color($colors, primary);
+      color: color($colors, white);
+    }
+  }
+}
+
+
+
