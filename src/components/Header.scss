@@ -1,0 +1,20 @@
+@import '../UI/styles/variables';
+
+.header {
+  left: 0;
+  top: 0;
+  background-color: color($colors, primary);
+
+  &__title {
+    color: color($colors, white);
+    text-decoration: none;
+    transition: all 0.3s;
+    letter-spacing: -1px;
+    text-shadow: color($colors, black) 1px 0 30px;
+
+    span{
+      color: color($colors, gray);
+      letter-spacing: -2px;
+    }
+  }
+}
