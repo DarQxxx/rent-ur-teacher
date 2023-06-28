@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const useValidate = (type: string) => {
   const [isTouched, setIsTouched] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>(
-    "Pole nie może być puste"
+    `Pole ${type} nie może być puste`
   );
   const [value, setValue] = useState<any>("");
   const [isValid, setIsValid] = useState<boolean>(false);
@@ -39,8 +39,9 @@ const useValidate = (type: string) => {
         return;
     }
   };
+
   const isError = !isValid && isTouched;
-  return { isValid, isError, errorMessage, blurHandler, changeHandler, value };
+  return { isValid, isError, errorMessage, blurHandler, changeHandler, value, setIsTouched};
 };
 
 export default useValidate;
