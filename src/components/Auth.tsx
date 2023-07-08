@@ -33,13 +33,13 @@ const AuthForm: React.FC<{ action: string }> = (props) => {
                 data: data,
             }).then(r => {
                 if (r.success){
-                    localStorage.setItem("token", r.token);
+                    localStorage.setItem("token", r.result);
                     navigate("/", {replace:true});
                 }
                 else{
                     setSubmitResult({
                         success: r.success,
-                        resultMsg: r.error
+                        resultMsg: r.result
                     })
                 }
             });
