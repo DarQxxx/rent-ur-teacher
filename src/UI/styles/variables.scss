@@ -12,6 +12,23 @@ $colors: (
         coral: #fff2f6
 );
 
+@each $color, $value in $colors {
+  .text--#{$color} {
+    color: $value;
+  }
+  //.#{$color}-bg {
+  //  background-color: $value;
+  //}
+}
+
+.text-color {
+  @for $i from 5 through 50 {
+    &--#{$i} {
+      font-size: #{$i}px !important;
+    }
+  }
+}
+
 //$color: $colors;
 @function color($palette, $key) {
   @return map.get($palette, $key)

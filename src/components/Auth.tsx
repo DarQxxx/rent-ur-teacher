@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import useValidate from "../hooks/useValidate";
 import useFetch from "../hooks/useFetch";
 import "./Auth.scss";
 import {Link, useNavigate} from "react-router-dom";
+import AuthContext from "../context/store/auth-context";
 
 const AuthForm: React.FC<{ action: string }> = (props) => {
     const [submitResult, setSubmitResult] = useState<{ success: any, resultMsg: string }>({
@@ -14,6 +15,7 @@ const AuthForm: React.FC<{ action: string }> = (props) => {
     const email = useValidate("email");
     const password = useValidate("password");
     const authFetch = useFetch();
+    const ctx = useContext(AuthContext)
 
     const submitHandler = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -32,14 +34,15 @@ const AuthForm: React.FC<{ action: string }> = (props) => {
                 headers: {"Content-Type": "application/json"},
                 data: data,
             }).then(r => {
-                if (r.success){
-                    localStorage.setItem("token", r.result);
-                    navigate("/", {replace:true});
-                }
-                else{
+                if (r.success) {
+                    ctx.onLogin(r.token)
+                    localStorage.setItem("token", r.token);
+
+                    navigate("/", {replace: true});
+                } else {
                     setSubmitResult({
                         success: r.success,
-                        resultMsg: r.result
+                        resultMsg: r.error
                     })
                 }
             });
@@ -48,7 +51,7 @@ const AuthForm: React.FC<{ action: string }> = (props) => {
     };
     return (
         <div className="flex-grow-1 d-flex align-items-center justify-content-center flex-column">
-            {!submitResult.success && <p className="error-ryt font--18">{submitResult.resultMsg}</p>}
+            {!submitResult.success && <p className="font--18 fw-bold text--red mb-0">{submitResult.resultMsg}</p>}
             <form onSubmit={submitHandler} className="d-flex flex-column auth mt-4">
                 <label
                     htmlFor="email"

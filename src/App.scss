@@ -18,7 +18,8 @@
   border-radius: 4px;
 
   &--white {
-    padding: 9px 23px;
+    font-size: 15px;
+    padding: 9px 20px;
     background-color: color($colors, white);
     border: solid 5px color($colors, white);
     color: color($colors, primary);
