@@ -2,9 +2,7 @@ import Teachers from "../components/Teachers";
 
 export default function Home() {
     return (
-        <div className={"container"}>
-            <Teachers />
-        </div>
+        <Teachers />
     );
 }
 

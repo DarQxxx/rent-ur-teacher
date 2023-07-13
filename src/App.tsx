@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home, { loader as usersLoader } from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import AddOffer from "./pages/AddOffer";
 
 const router = createBrowserRouter([
   {
@@ -18,13 +19,22 @@ const router = createBrowserRouter([
         loader: usersLoader,
       },
       {
-        path: "/register",
+        path: "register",
         element: <Register />,
       },
       {
-        path: "/login",
+        path: "login",
         element: <Login />,
       },
+      {
+        path: "offer",
+        children: [
+          {
+            path: "add",
+            element: <AddOffer />
+          },
+        ]
+      }
     ],
   },
 ]);
