@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 import './OfferDetails.scss'
+import useFetch from "../hooks/useFetch";
+import AuthContext from "../context/store/auth-context";
+import {useNavigate} from "react-router-dom";
 
 type OfferInputs = {
     title: string,
@@ -9,14 +12,32 @@ type OfferInputs = {
     price: number,
     city: number | string,
     email: string,
-    telephone: number
+    telephone: string
 
 };
 const OfferDetails: React.FC = () => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<OfferInputs>({
+    const authFetch = useFetch();
+    const ctx = useContext(AuthContext)
+    const navigate = useNavigate()
+    const { register, handleSubmit, formState: { errors } } = useForm<OfferInputs>({
         mode: "onTouched"
     });
-    const onSubmit: SubmitHandler<OfferInputs> = data => console.log(data);
+    const onSubmit: SubmitHandler<OfferInputs> = data => {
+        authFetch(`http://localhost:5000/offer/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                // "Authorization": `Bearer ${ctx.loginToken}`
+            },
+            data: {...data, token: ctx.loginToken},
+        }).then(r => {
+            if (r.success) {
+                // navigate("/offers", {replace: true});
+            } else {
+                console.log(r.result)
+            }
+        });
+    };
     return (
         <div className="container mb-3">
             <div className="row">
