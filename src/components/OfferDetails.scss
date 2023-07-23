@@ -1,0 +1,30 @@
+@import '../UI/styles/variables';
+
+.offer-form{
+  textarea{
+    resize: none;
+  }
+  &--segment{
+    background-color: color($colors, white);
+  }
+}
+#input_title{
+  max-height: 45px;
+}
+#input_description{
+  min-height:120px
+}
+#input_theme{
+}
+#input_price{
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+  -moz-appearance:textfield; /* Firefox */
+}

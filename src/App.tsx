@@ -7,6 +7,7 @@ import Home, { loader as usersLoader } from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import AddOffer from "./pages/AddOffer";
+import {checkAuthLoader} from "./util/auth-loader";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: "offer",
+        loader: checkAuthLoader,
         children: [
           {
             path: "add",

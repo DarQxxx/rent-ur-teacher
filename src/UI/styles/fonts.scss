@@ -5,3 +5,11 @@
     }
   }
 }
+
+.line-height {
+  @for $i from 10 through 65 {
+    &--#{$i} {
+      line-height: #{$i}px !important;
+    }
+  }
+}

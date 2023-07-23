@@ -4,10 +4,9 @@ import {Link, Outlet, useNavigate} from "react-router-dom";
 import AuthContext from "../context/store/auth-context";
 const Header: React.FC = () => {
     const ctx = useContext(AuthContext)
-    const navigate = useNavigate()
     return (
         <div className="d-flex flex-column min-vh-100">
-            <div className="header d-flex justify-content-xxl-around justify-content-between  w-100 align-items-center p-3 flex-row">
+            <div className="header d-flex justify-content-xxl-around justify-content-between  w-100 align-items-center p-3 flex-row mb-5">
                 <Link to="/" className="header__title font--28">
                     Rent<span className="fw-bold">Your</span>Teacher
                 </Link>
