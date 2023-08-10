@@ -1,5 +1,4 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.css";
 import "./App.scss";
 import Header from "./components/Header";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -28,11 +27,18 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "offer",
+        path: "offers",
         loader: checkAuthLoader,
         children: [
           {
             path: "add",
+            element: <AddOffer />
+          },
+          {
+            path: ":id",
+            loader: async ({params}) => {
+              return fetch(`http://localhost:5000/offer/${params.id}`)
+            },
             element: <AddOffer />
           },
         ]

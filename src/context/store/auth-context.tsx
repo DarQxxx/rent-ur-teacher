@@ -19,8 +19,6 @@ export const AuthContextProvider  = ({ children }: { children: React.ReactNode }
         if (localStorage.getItem("token")) {
             setLoginToken((localStorage.getItem("token") as string))
         }
-        console.log(loginToken)
-        console.log(localStorage.getItem("token"))
         return () => {};
     }, [loginToken]);
 

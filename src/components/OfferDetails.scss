@@ -1,4 +1,5 @@
 @import '../UI/styles/variables';
+@import "~bootstrap/scss/bootstrap-grid.scss";
 
 .offer-form{
   textarea{
@@ -9,7 +10,9 @@
   }
 }
 #input_title{
-  max-height: 45px;
+  @include media-breakpoint-up(md){
+    max-height: 45px;
+  }
 }
 #input_description{
   min-height:120px
@@ -20,9 +23,8 @@
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  /* display: none; <- Crashes Chrome on hover */
   -webkit-appearance: none;
-  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  margin: 0;
 }
 
 input[type=number] {

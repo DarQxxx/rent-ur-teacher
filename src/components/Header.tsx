@@ -15,7 +15,7 @@ const Header: React.FC = () => {
                         <Link to='/login' className="font--14 text--white text-decoration-none fw-bold">Zaloguj</Link> :
                         <Link to='/login' onClick={ctx.onLogout} className="font--14 text--white text-decoration-none fw-bold">Wyloguj</Link>
                     }
-                    <Link to='/offer/add' className="btn-ryt btn-ryt--white">Dodaj ogłoszenie</Link>
+                    <Link to='/offers/add' className="btn-ryt btn-ryt--white">Dodaj ogłoszenie</Link>
                 </div>
             </div>
             <Outlet/>
