@@ -13,7 +13,6 @@ type OfferInputs = {
     city: number | string,
     email: string,
     telephone: string
-
 };
 const OfferDetails: React.FC = () => {
     const authFetch = useFetch();
