@@ -1,9 +1,10 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 import './OfferDetails.scss'
 import useFetch from "../hooks/useFetch";
 import AuthContext from "../context/store/auth-context";
 import {useLoaderData, useNavigate} from "react-router-dom";
+import {loader} from "../pages/Home";
 
 type OfferInputs = {
     title: string,
@@ -12,18 +13,29 @@ type OfferInputs = {
     price: number,
     city: number | string,
     email: string,
-    telephone: string
+    phone: string
 };
 const OfferDetails: React.FC = () => {
     const authFetch = useFetch();
     const ctx = useContext(AuthContext)
     const navigate = useNavigate()
+    const {offer} = useLoaderData() as Awaited<ReturnType<typeof loader>> || { offer: undefined }
     const { register, handleSubmit, formState: { errors } } = useForm<OfferInputs>({
-        mode: "onTouched"
+        mode: "onTouched",
+        defaultValues:{
+            title: offer ? offer.title : "",
+            description: offer ? offer.description : "",
+            theme: offer ? offer.theme : "",
+            price: offer ? offer.price : "",
+            email: offer ? offer.email : "",
+            city: offer ? offer.city : "",
+            phone: offer ? offer.phone : "",
+
+        }
     });
     const onSubmit: SubmitHandler<OfferInputs> = data => {
-        authFetch(`http://localhost:5000/offer/`, {
-            method: "POST",
+        authFetch(`http://localhost:5000/offer/${offer && offer._id}`, {
+            method: offer ? "PATCH" : "POST",
             headers: {
                 "Content-Type": "application/json",
                 // "Authorization": `Bearer ${ctx.loginToken}`
@@ -33,11 +45,14 @@ const OfferDetails: React.FC = () => {
             if (r.success) {
                 // navigate("/offers", {replace: true});
             } else {
+                console.log(r)
                 console.log(r.result)
             }
         });
     };
-    console.log(useLoaderData())
+    const onDelete: SubmitHandler<OfferInputs> = data => {
+        console.log("data")
+    }
     return (
         <div className="container mb-3">
             <div className="row">
@@ -92,17 +107,17 @@ const OfferDetails: React.FC = () => {
                         {errors.email && errors.email?.message && <span className="error-ryt">{errors.email.message}</span>}
                     </div>
                     <div className="d-flex flex-column">
-                        <label className={`label-ryt ${errors.telephone && "label-ryt--error"} font--14`} htmlFor="price">Telefon</label>
-                        <input id="input_telephone" type="text" placeholder="np. 606733128" {...register("telephone", {pattern: {value: /^(?:[0-9]{9}|[0-9]{3} [0-9]{3} [0-9]{3}|[0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2})$/, message: "Podany numer jest nieprawidłowy"}})} name="telephone" className={`input-ryt ${errors.telephone && "input-ryt--error"}`}/>
-                        {errors.telephone && errors.telephone?.message && <span className="error-ryt">{errors.telephone.message}</span>}
+                        <label className={`label-ryt ${errors.phone && "label-ryt--error"} font--14`} htmlFor="price">Telefon</label>
+                        <input id="input_phone" type="text" placeholder="np. 606733128" {...register("phone", {pattern: {value: /^(?:[0-9]{9}|[0-9]{3} [0-9]{3} [0-9]{3}|[0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2})$/, message: "Podany numer jest nieprawidłowy"}})} name="phone" className={`input-ryt ${errors.phone && "input-ryt--error"}`}/>
+                        {errors.phone && errors.phone?.message && <span className="error-ryt">{errors.phone.message}</span>}
                     </div>
                     <p className="mb-0 font--10">* pola wymagane</p>
                 </div>
-                <div className="w-100 d-flex ps-md-5 pe-md-5 pe-2 ps-2 justify-content-between gap-4 gap-md-0">
+                <div className="w-100 d-flex justify-content-between gap-4 gap-md-0">
                     <button className="btn-ryt btn-ryt--green btn-ryt--width mt-4"
-                            type="submit">Dodaj ogłoszenie</button>
-                    <button className="btn-ryt btn-ryt--red btn-ryt--width mt-4"
-                            type="button">Usuń ogłoszenie</button>
+                            type="submit">{offer ? "Zapisz zmiany" : "Dodaj ogłoszenie"}</button>
+                    {offer && <button onClick={handleSubmit(onDelete)} className="btn-ryt btn-ryt--red btn-ryt--width mt-4"
+                                      type="button">Usuń ogłoszenie</button>}
                 </div>
             </form>
         </div>
