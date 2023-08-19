@@ -1,5 +1,8 @@
-@import '../UI/styles/variables';
-@import "~bootstrap/scss/bootstrap-grid.scss";
+@import '../../UI/styles/variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins/breakpoints';
+
 
 .offer-form{
   textarea{

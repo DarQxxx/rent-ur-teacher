@@ -1,10 +1,11 @@
 import React, {useContext, useState} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 import './OfferDetails.scss'
-import useFetch from "../hooks/useFetch";
-import AuthContext from "../context/store/auth-context";
+import useFetch from "../../hooks/useFetch";
+import AuthContext from "../../context/store/auth-context";
 import {useLoaderData, useNavigate} from "react-router-dom";
-import {loader} from "../pages/Home";
+import {loader} from "../../pages/Home";
+import ToastContext from "../../context/store/toast-context";
 
 type OfferInputs = {
     title: string,
@@ -19,6 +20,7 @@ const OfferDetails: React.FC = () => {
     const authFetch = useFetch();
     const ctx = useContext(AuthContext)
     const navigate = useNavigate()
+    const toastCtx = useContext(ToastContext);
     const {offer} = useLoaderData() as Awaited<ReturnType<typeof loader>> || { offer: undefined }
     const { register, handleSubmit, formState: { errors } } = useForm<OfferInputs>({
         mode: "onTouched",
@@ -43,10 +45,12 @@ const OfferDetails: React.FC = () => {
             data: {...data, token: ctx.loginToken},
         }).then(r => {
             if (r.success) {
+                console.log(toastCtx)
+                toastCtx.showToast({message: "Pomyślnie zapisano", type: "success"})
                 // navigate("/offers", {replace: true});
             } else {
-                console.log(r)
-                console.log(r.result)
+                // console.log(r)
+                // console.log(r.result)
             }
         });
     };

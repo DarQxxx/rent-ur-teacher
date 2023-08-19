@@ -9,7 +9,8 @@ $colors: (
         light-gray: #cbcbcd,
         gray-white: #f6f6f6,
         red: #bb3333,
-        coral: #fff2f6
+        coral: #fff2f6,
+        success: #198754,
 );
 
 @each $color, $value in $colors {

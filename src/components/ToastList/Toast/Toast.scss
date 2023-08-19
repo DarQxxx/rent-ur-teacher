@@ -1,0 +1,51 @@
+@import '../../../UI/styles/variables';
+
+.toast-single{
+  position: relative;
+  background-color: color($colors, white);
+  color: color($colors, white);
+  animation: toast-in 0.7s;
+  cursor: pointer;
+  padding: 20px 25px;
+  width:300px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 14px -8px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 0px 0px 14px -8px rgba(66, 68, 90, 1);
+  box-shadow: 0px 0px 14px -8px rgba(66, 68, 90, 1);
+  font-weight: bold;
+  margin-top:10px;
+}
+
+.toast-out{
+  animation: toast-out 0.5s;
+}
+
+.toast-single--success{
+background-color: color($colors, success);
+}
+
+@keyframes toast-in {
+  0% {
+    transform: translateX(100%);
+  }
+  50% {
+    transform: translateX(-40%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes toast-out {
+  0% {
+    //transform: translateY(0%);
+    opacity: 1
+  }
+  //50% {
+  //  transform: translateY(40%);
+  //}
+  100% {
+    //transform: translateY(-100%);
+    opacity: 0;
+  }
+}

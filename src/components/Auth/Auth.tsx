@@ -1,9 +1,9 @@
 import React, {useContext, useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 import "./Auth.scss";
 import {Link, useNavigate} from "react-router-dom";
-import AuthContext from "../context/store/auth-context";
+import AuthContext from "../../context/store/auth-context";
 
 type RegisterInputs = {
     email: string,

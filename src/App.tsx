@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.scss";
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home, { loader as usersLoader } from "./pages/Home";
 import Register from "./pages/Register";
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
   },
 ]);
 function App() {
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={router} ></RouterProvider>;
 }
 
 export default App;

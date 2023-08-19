@@ -9,3 +9,8 @@ export interface Teacher {
     about: string;
     img: string;
 }
+export interface ToastInterface {
+    message: string,
+    type: string,
+    id?: number
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import OfferDetails from "../components/OfferDetails";
+import OfferDetails from "../components/OfferDetails/OfferDetails";
 
 function AddOffer() {
     return (
