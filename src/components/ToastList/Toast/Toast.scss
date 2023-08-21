@@ -23,13 +23,16 @@
 .toast-single--success{
 background-color: color($colors, success);
 }
+.toast-single--danger{
+  background-color: color($colors, danger);
+}
 
 @keyframes toast-in {
   0% {
     transform: translateX(100%);
   }
   50% {
-    transform: translateX(-40%);
+    transform: translateX(-30%);
   }
   100% {
     transform: translateX(0%);

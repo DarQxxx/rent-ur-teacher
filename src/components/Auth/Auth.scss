@@ -3,8 +3,10 @@
 .auth {
   max-width: 300px;
   width: 100%;
+  input{
+    background-color: color($colors, white) ;
+  }
+
 }
-input{
-    background-color: color($colors, white) !important;
-}
+
 

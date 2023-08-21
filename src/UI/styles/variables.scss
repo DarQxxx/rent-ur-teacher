@@ -11,6 +11,7 @@ $colors: (
         red: #bb3333,
         coral: #fff2f6,
         success: #198754,
+        danger: #C91432
 );
 
 @each $color, $value in $colors {

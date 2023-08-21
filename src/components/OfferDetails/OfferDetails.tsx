@@ -19,7 +19,7 @@ type OfferInputs = {
 const OfferDetails: React.FC = () => {
     const authFetch = useFetch();
     const ctx = useContext(AuthContext)
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const toastCtx = useContext(ToastContext);
     const {offer} = useLoaderData() as Awaited<ReturnType<typeof loader>> || { offer: undefined }
     const { register, handleSubmit, formState: { errors } } = useForm<OfferInputs>({
@@ -46,11 +46,15 @@ const OfferDetails: React.FC = () => {
         }).then(r => {
             if (r.success) {
                 console.log(toastCtx)
-                toastCtx.showToast({message: "Pomyślnie zapisano", type: "success"})
-                // navigate("/offers", {replace: true});
+                if (offer){
+                    toastCtx.showToast({message: "Pomyślnie zapisano zmiany", type: "success"})
+                }
+                else {
+                    toastCtx.showToast({message: "Pomyślnie dodano oferte", type: "success"})
+                    // navigate("/offers", {replace: true});
+                }
             } else {
-                // console.log(r)
-                // console.log(r.result)
+                toastCtx.showToast({message: "Coś poszło nie tak", type: "danger"})
             }
         });
     };
@@ -69,12 +73,12 @@ const OfferDetails: React.FC = () => {
                         <p className="font--14 line-height--20 mb-0">Im lepiej wypełnisz swoje ogłoszenie, tym większa szansa na znalezienie ucznia!</p>
                     </div>
                     <div className="d-flex flex-column">
-                        <label className={`label-ryt ${errors.title && "label-ryt--error"} font--14`} htmlFor="title">Tytuł*</label>
+                        <label className={`label-ryt ${errors.title && "label-ryt--error"} font--14`} htmlFor="input_title">Tytuł*</label>
                         <textarea id="input_title" placeholder="np. Najlepsze korepetycje z angielskiego tylko u Kowalskiego!" {...register("title", { required: {value: true, message: "Pole tytuł nie może być puste"}, maxLength: {value: 75, message: "Tytuł nie może być dłuższy niż 75 znaków"}})} name="title" className={`input-ryt ${errors.title && "input-ryt--error"}`}/>
                         {errors.title && errors.title?.message && <span className="error-ryt">{errors.title.message}</span>}
                     </div>
                     <div className="d-flex flex-column">
-                        <label className={`label-ryt ${errors.description && "label-ryt--error"} font--14`} htmlFor="description">Opis*</label>
+                        <label className={`label-ryt ${errors.description && "label-ryt--error"} font--14`} htmlFor="input_description">Opis*</label>
                         <textarea id="input_description" placeholder="np. Korepetycje u emerytowanego nauczyciela angielskiego pochodzenia. Mój angielski jest na poziomie C2 (native). Uczyłem ponad setki maturzystów..." {...register("description", { required: {value: true, message: "Pole opis nie może być puste"}, minLength: {value: 150, message: "Opis musi zawierać co najmniej 150 znaków"}})} name="description" className={`input-ryt ${errors.description && "input-ryt--error"}`}/>
                         {errors.description && errors.description?.message && <span className="error-ryt">{errors.description.message}</span>}
                     </div>
@@ -85,17 +89,17 @@ const OfferDetails: React.FC = () => {
                         <p className="font--14 line-height--20 mb-0">Upewnij się, że nazwa Twojego przedmiotu jest poprawna. Od tego zależy czy zostaniesz pokazany w filtrach</p>
                     </div>
                     <div className="d-flex flex-column">
-                        <label className={`label-ryt ${errors.theme && "label-ryt--error"} font--14`} htmlFor="price">Przedmiot*</label>
+                        <label className={`label-ryt ${errors.theme && "label-ryt--error"} font--14`} htmlFor="input_theme">Przedmiot*</label>
                         <input id="input_theme" type="text" placeholder="np. Angielski" {...register("theme", { required: {value: true, message: "Pole przedmiot nie może być puste"}})} name="theme" className={`input-ryt ${errors.theme && "input-ryt--error"}`}/>
                         {errors.theme && errors.theme?.message && <span className="error-ryt">{errors.theme.message}</span>}
                     </div>
                     <div className="d-flex flex-column">
-                        <label className={`label-ryt ${errors.price && "label-ryt--error"} font--14`} htmlFor="price">Cena* <span className="font--10">(PLN)/45 min lekcji</span></label>
+                        <label className={`label-ryt ${errors.price && "label-ryt--error"} font--14`} htmlFor="input_price">Cena* <span className="font--10">PLN/45 min lekcji</span></label>
                         <input id="input_price" type="number" min='0' placeholder="30" {...register("price", { required: {value: true, message: "Pole cena nie może być puste"}, min: {value: 0, message: "Cena nie może być mniejsza niż 0"}})} name="price" className={`input-ryt ${errors.price && "input-ryt--error"}`}/>
                         {errors.price && errors.price?.message && <span className="error-ryt">{errors.price.message}</span>}
                     </div>
                     <div className="d-flex flex-column">
-                        <label className={`label-ryt ${errors.city && "label-ryt--error"} font--14`} htmlFor="city">Miasto*</label>
+                        <label className={`label-ryt ${errors.city && "label-ryt--error"} font--14`} htmlFor="input_city">Miasto*</label>
                         <input id="input_city" type="text" placeholder="np. Warszawa" {...register("city", { required: {value: true, message: "Pole miasto nie może być puste"}})} name="city" className={`input-ryt ${errors.city && "input-ryt--error"}`}/>
                         {errors.city && errors.city?.message && <span className="error-ryt">{errors.city.message}</span>}
                     </div>
@@ -106,12 +110,12 @@ const OfferDetails: React.FC = () => {
                         <p className="font--14 line-height--20 mb-0">Podaj prawidłowe dane kontaktowe. Nie chcemy, przecież głuchych telefonów</p>
                     </div>
                     <div className="d-flex flex-column">
-                        <label className={`label-ryt ${errors.email && "label-ryt--error"} font--14`} htmlFor="email">Email*</label>
+                        <label className={`label-ryt ${errors.email && "label-ryt--error"} font--14`} htmlFor="input_email">E-mail*</label>
                         <input id="input_email" type="email" placeholder="np. zygmunt.kowalski@domain.com" {...register("email", { required: {value: true, message: "Pole email nie może być puste"}, pattern: {value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/i, message: "Podany email jest nieprawidłowy"}})} name="email" className={`input-ryt ${errors.email && "input-ryt--error"}`}/>
                         {errors.email && errors.email?.message && <span className="error-ryt">{errors.email.message}</span>}
                     </div>
                     <div className="d-flex flex-column">
-                        <label className={`label-ryt ${errors.phone && "label-ryt--error"} font--14`} htmlFor="price">Telefon</label>
+                        <label className={`label-ryt ${errors.phone && "label-ryt--error"} font--14`} htmlFor="input_phone">Telefon</label>
                         <input id="input_phone" type="text" placeholder="np. 606733128" {...register("phone", {pattern: {value: /^(?:[0-9]{9}|[0-9]{3} [0-9]{3} [0-9]{3}|[0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2})$/, message: "Podany numer jest nieprawidłowy"}})} name="phone" className={`input-ryt ${errors.phone && "input-ryt--error"}`}/>
                         {errors.phone && errors.phone?.message && <span className="error-ryt">{errors.phone.message}</span>}
                     </div>
