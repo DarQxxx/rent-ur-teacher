@@ -4,6 +4,8 @@ import OfferDetails from './OfferDetails';
 import {createMemoryRouter, RouterProvider} from "react-router-dom";
 import '@testing-library/jest-dom/extend-expect';
 import userEvent from "@testing-library/user-event";
+import {ToastContextProvider} from "../../context/store/toast-context";
+import Header from "../Header/Header";
 
 
 describe("test form apperance", () => {
@@ -169,6 +171,82 @@ describe("test form add validation", () => {
         expect(global.fetch).toBeCalledTimes(0)
     })
 
+    test("description input is empty validation", async () => {
+        const {submitBtn, inputDesc} = await initialSetup();
+        userEvent.clear(inputDesc)
+        userEvent.click(submitBtn)
+        expect(global.fetch).toBeCalledTimes(0)
+    })
+
+})
+
+describe("test form add validation", () => {
+    const initialSetup = async () => {
+        let router
+        let submitBtn: HTMLElement
+        let inputTitle: HTMLElement
+        let inputDesc: HTMLElement
+        let inputTheme: HTMLElement
+        let inputPrice: HTMLElement
+        let inputCity: HTMLElement
+        let inputEmail: HTMLElement
+        let inputPhone: HTMLElement
+        const FAKE_EVENT = {offer: undefined};
+        const mockData = {success: true, result: FAKE_EVENT};
+        global.fetch = jest.fn().mockResolvedValue({ ok: true, json: async () => mockData })
+        const routes = [
+            {
+                path: "/",
+                element: <Header />,
+                children: [
+                    {
+                        path: "/offers/add",
+                        element: <OfferDetails/>,
+                        loader: () => FAKE_EVENT
+                    }
+                ]
+            }
+        ]
+        router = createMemoryRouter(routes, {
+            initialEntries: ["/offers/add"]
+        })
+        render(
+            <ToastContextProvider>
+                <RouterProvider router={router}/>
+            </ToastContextProvider>
+        );
+
+        [submitBtn, inputTitle, inputDesc, inputTheme, inputPrice, inputCity, inputEmail, inputPhone] = await Promise.all([
+            waitFor(() => screen.getByRole("button", {name: /dodaj ogłoszenie/i})),
+            waitFor(() => screen.getByLabelText('Tytuł*')),
+            waitFor(() => screen.getByLabelText('Opis*')),
+            waitFor(() => screen.getByLabelText('Przedmiot*')),
+            waitFor(() => screen.getByLabelText(/Cena/i)),
+            waitFor(() => screen.getByLabelText('Miasto*')),
+            waitFor(() => screen.getByLabelText('E-mail*')),
+            waitFor(() => screen.getByLabelText('Telefon')),
+        ]);
+
+        userEvent.type(inputTitle, "Testowy tytuł")
+        userEvent.type(inputDesc, "Testowy 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890")
+        userEvent.type(inputTheme, "Testowy przedmiot")
+        userEvent.type(inputPrice, "32")
+        userEvent.type(inputCity, "Testoland")
+        userEvent.type(inputEmail, "test@gmail.com")
+        userEvent.type(inputPhone, "606 606 606")
+
+        return {
+            submitBtn, inputTitle, inputDesc, inputTheme, inputPrice, inputCity, inputEmail, inputPhone
+        };
+    }
+
+    test("toast works", async () => {
+        const {submitBtn} = await initialSetup();
+        userEvent.click(submitBtn)
+        // await waitFor( () => expect(global.fetch).toBeCalledTimes(1))
+        const toast = await screen.findByText(/Pomyślnie dodano oferte/i)
+        expect(toast).toBeInTheDocument()
+    })
 
 
 })

@@ -36,7 +36,7 @@ const OfferDetails: React.FC = () => {
         }
     });
     const onSubmit: SubmitHandler<OfferInputs> = data => {
-        authFetch(`http://localhost:5000/offer/${offer && offer._id}`, {
+        authFetch(`http://localhost:5000/offer/${offer ? offer._id : ''}`, {
             method: offer ? "PATCH" : "POST",
             headers: {
                 "Content-Type": "application/json",
